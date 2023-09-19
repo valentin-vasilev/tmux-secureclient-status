@@ -7,7 +7,8 @@ vpn_status() {
 		# fetch system network information
 		secure_client_stats=$(/opt/cisco/secureclient/bin/vpn stats)
 		if grep -q "Connection State:            Connected" <<< "$secure_client_stats"; then
-		echo " "
+			secure_client_ipv4=$(grep "Client Address (IPv4):" <<< "$secure_client_stats" | awk '{ print $4 }')
+			echo " [$secure_client_ipv4]"
 	else
 		echo " "
 		fi
