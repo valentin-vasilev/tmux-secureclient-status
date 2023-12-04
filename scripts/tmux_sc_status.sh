@@ -28,7 +28,7 @@ vpn_status() {
 		secure_client_stats=$(/opt/cisco/secureclient/bin/vpn stats)
 		if grep -q "Connection State:            Connected" <<< "$secure_client_stats"; then
 			secure_client_ipv4=$(grep "Client Address (IPv4):" <<< "$secure_client_stats" | awk '{ print $4 }')
-			if [ $vpn_ip_address_default -eq 1 ]; then
+			if [ $ip_address_display -eq 1 ]; then
 				echo "$vpn_connected_icon [$secure_client_ipv4]"
 			else
 				echo "$vpn_connected_icon"
