@@ -1,12 +1,15 @@
 #!/usr/bin/env bash
 
+CURRENT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+source "$CURRENT_DIR/helpers.sh"
+
 kernel_name=$(uname -s)
 
 vpn_connected_icon=""
 vpn_disconnected_icon=""
 
-vpn_connected_icon_default=""
-vpn_disconnected_icon_default=""
+vpn_connected_icon_default=" "
+vpn_disconnected_icon_default=" "
 
 vpn_ip_address_default=0
 
@@ -25,7 +28,7 @@ vpn_status() {
 		secure_client_stats=$(/opt/cisco/secureclient/bin/vpn stats)
 		if grep -q "Connection State:            Connected" <<< "$secure_client_stats"; then
 			secure_client_ipv4=$(grep "Client Address (IPv4):" <<< "$secure_client_stats" | awk '{ print $4 }')
-			if [$vpn_ip_address_default -eq 1]; then
+			if [ $vpn_ip_address_default -eq 1 ]; then
 				echo "$vpn_connected_icon [$secure_client_ipv4]"
 			else
 				echo "$vpn_connected_icon"
